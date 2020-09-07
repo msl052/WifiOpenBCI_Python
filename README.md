@@ -1,4 +1,4 @@
-### WifiOpenBCI_Python
+# WifiOpenBCI_Python
 
 ## Goal
 - The goal of this repo is to allow multiple wifi synchronized streaming using OpenBCI boards.
