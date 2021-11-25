@@ -5,29 +5,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear; clc; close all;
 
+path = "C:\Users\Min\Documents\CurrentStudy\sub-P001\ses-S001\eeg";
 %%% Load Data [Must Run]
-filename = "sub-P001_ses-S001_task-T1_acq-Rayla_Desk_SR1000_Ch16_TestSignal2_run-001_eeg" + ".xdf";
+filename = "sub-P001_ses-S001_task-DualStreaming Unchained.xdf";
 
 % Extract Data from xdf file
 package = load_xdf(filename); % Streams from the .xdf
 numpackage = length(package); % define number of stream (i.e. eeg and accel)
 
 %% Initialize Variables
-select_package = 1; % select the package
-select_stream = 1; % select the stream
-select_channel = 1; % select the channel. This is for single plots
-stream = package{select_package}; % get stream
-Fs = stream.info.effective_srate; % get sample rate
-N = str2num(stream.info.sample_count); % get sample number
-channum = str2num(stream.info.channel_count); % get channel count
-data_Y = double(stream.time_series); % get time series data [channum x N]
-data_X = stream.time_stamps; % get time stamp
+select_package  = 1; % select the package
+select_stream   = 1; % select the stream
+select_channel  = 1; % select the channel. This is for single plots
+stream          = package{select_package}; % get stream
+
+Fs              = stream.info.effective_srate; % get sample rate
+N               = str2num(stream.info.sample_count); % get sample number
+channum         = str2num(stream.info.channel_count); % get channel count
+data_Y          = double(stream.time_series); % get time series data [channum x N]
+data_X          = stream.time_stamps; % get time stamp
 %data_X = 0:1/Fs:(N-1)/Fs; % Assuming no data drop
-
-% Do you want to save the figures?
 savefig = false; % if saving the figures to jpg is needed
-
-% Trim Data
+%% Trim Data
 if false % true or false
     startidx = 1; % start of the data trim
     endidx = 3000; % end of the data trim
@@ -35,7 +34,6 @@ if false % true or false
     data_Y = data_Y(:,trimrange) % new data
     data_X = data_X(trimrange) % end data
 end
-
 %% Plot Time-Series Unfiltered
 figure(6);
 for c = 1:channum
